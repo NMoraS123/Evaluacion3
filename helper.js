@@ -2,38 +2,45 @@ const verificar = (id) => {
     const input = document.getElementById(id);
     const div = document.getElementById('e-' + id);
 
+    if (!input || !div) {
+        console.error(`Element or error element not found for id: ${id}`);
+        return;
+    }
+
     input.classList.remove('is-invalid', 'is-valid');
-    
-    if (input.value.trim() == '') {
+
+    if (input.value.trim() === '') {
         input.classList.add('is-invalid');
         div.innerHTML = '<span class="badge bg-danger">El campo es obligatorio</span>';
     } else {
         input.classList.add('is-valid');
         div.innerHTML = '';
-        
-        if (id == 'coste') {
-            if (input.value < 25000) {
-                input.classList.add('is-invalid');
-                div.innerHTML = '<span class="badge bg-danger">Coste de servicio no puede ser menor a $25000</span>';
-            }
+
+        if (id === 'valor' && input.value < 25000) {
+            input.classList.add('is-invalid');
+            div.innerHTML = '<span class="badge bg-danger">Coste de servicio no puede ser menor a $25000</span>';
         }
-        if (id == 'run') {
-            if (!validarRun(input.value)) {
-                input.classList.add('is-invalid');
-                div.innerHTML = '<span class="badge bg-danger">El run ingresado no es válido</span>';
-            }
+
+        if (id === 'run' && !validarRun(input.value)) {
+            input.classList.add('is-invalid');
+            div.innerHTML = '<span class="badge bg-danger">El run ingresado no es válido</span>';
         }
-        if (id == 'fecha') {
-            if (validarFecha(input.value) < 1) {
-                input.classList.add('is-invalid');
-                div.innerHTML = '<span class="badge bg-danger">Fecha inválida</span>';
-            }
+
+        if (id === 'fecha' && validarFecha(input.value) < 1) {
+            input.classList.add('is-invalid');
+            div.innerHTML = '<span class="badge bg-danger">Fecha inválida</span>';
         }
+
         if (id === 'patente' && !validarPatente(input.value)) {
             input.classList.add('is-invalid');
-            div.innerHTML = '<span class="badge bg-danger">Patente inválida</span>';
+            div.innerHTML = '<span class="badge bg-danger">La patente debe tener 6 caracteres alfanuméricos</span>';
         }
     }
+}
+
+const validarPatente = (patente) => {
+    const regex = /^[a-zA-Z0-9]{6}$/;
+    return regex.test(patente);
 }
 
 const limpiar = () => {
@@ -42,9 +49,9 @@ const limpiar = () => {
         console.error('Form not found');
         return;
     }
-    
+
     form.reset();
-    
+
     document.querySelectorAll('.form-control').forEach(item => {
         item.classList.remove('is-invalid', 'is-valid');
         const errorDiv = document.getElementById('e-' + item.id);
@@ -94,9 +101,4 @@ const validarRun = (run) => {
         }
     }
     return Fn.validaRut(run);
-}
-
-const validarPatente = (patente) => {
-    const regex = /^[a-zA-Z0-9]{6}$/;
-    return regex.test(patente);
 }

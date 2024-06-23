@@ -33,7 +33,7 @@ const verificar = (id) => {
 
         if (id === 'patente' && !validarPatente(input.value)) {
             input.classList.add('is-invalid');
-            div.innerHTML = '<span class="badge bg-danger">La patente debe tener 6 caracteres alfanuméricos</span>';
+            div.innerHTML = '<span class="badge bg-danger">La patente debe tener 6 caracteres alfanuméricos.</span>';
         }
     }
 }

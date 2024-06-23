@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 if (vehiculos.some(vehiculo => vehiculo.pat === auto.pat && vehiculo.id !== id)) {
                     Swal.fire({
                         title: "Error",
-                        text: "La patente ingresada ya está registrada",
+                        text: "La patente ingresada ya está registrada.",
                         icon: "error"
                     });
                 } else {
